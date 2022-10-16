@@ -31,7 +31,7 @@ identifiers = games['multi2'].str.extract(r'(.LS(\d{4})\d{5})')
 # Forward Fill Identifiers
 # The identifiers DataFrame now has two columns. For rows that match the regex, the row has the correct extracted values.
 # We need these values to be filled in for all rows on the identifiers DataFrame.
-identifiers.fillna(method='ffill')
+identifiers = identifiers.fillna(method='ffill')
 
 # Rename Column
 identifiers.columns = ['game_id', 'year']
