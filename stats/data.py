@@ -6,7 +6,7 @@ import pandas as pd
 game_files = glob.glob(os.path.join(os.getcwd(), 'games', '*.EVE'))
 
 # Note: There are two sorting functions in Python. To sort in place use list.sort(), not sorted(list) which returns a new list.
-list.sort(game_files)
+game_files.sort()
 
 game_frames = []
 
@@ -20,7 +20,7 @@ games = pd.concat(game_frames)
 # print(games)
 
 # Clean Values
-games.loc[games['multi5'] == '??', ['multi5']] = ''
+games.loc[games['multi5'] == '??', 'multi5'] = ''
 
 # Extract Identifiers
 # Each row of data should be associated with the proper game id. This can be accomplished with the extract() function.
@@ -46,6 +46,6 @@ games = games.fillna(' ')
 # Categorical Event Type
 # To slightly reduce the memory used by the games DataFrame we can provide Pandas with a clue to what data is contained in certain columns.
 # The type column of our games DataFrame only contains one of six values - info, start, play, com, sub, and data. Pandas can optimize this column with Categorical().
-pd.Categorical(games.loc[:, 'type'])
+games.loc[:, 'type'] = pd.Categorical(games.loc[:, 'type'])
 
 print(games.head())
