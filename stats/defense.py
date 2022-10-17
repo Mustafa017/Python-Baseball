@@ -46,7 +46,7 @@ events = events.unstack().fillna(0).reset_index()
 events.columns = events.columns.droplevel()
 events.columns = ['year', 'game_id', 'team',
                   'BB', 'E', 'H', 'HBP', 'HR', 'ROE', 'SO']
-events = events.rename_axis(None, axis=1)
+events = events.rename_axis(None, axis='columns')
 
 # Merge - Plate Appearances
 # We now have two DataFrames that have similar columns. The pa DataFrame has year, game_id, team and PA.
@@ -55,7 +55,7 @@ events = events.rename_axis(None, axis=1)
 # There are several other keyword arguments that can be used with pd.merge().
 # In our case, we will use how set to outer, and both left_on and right_on set to a list of columns to merge on, 'year', 'game_id', and 'team'.
 # Like many Pandas functions, pd.merge() returns a DataFrame. Save this one as events_plus_pa.
-events_plus_pa = pd.merge(pa, events, how='outer', left_on=[
+events_plus_pa = pd.merge(events, pa, how='outer', left_on=[
                           'year', 'game_id', 'team'], right_on=['year', 'game_id', 'team'])
 
 # Merge - Team
@@ -64,7 +64,7 @@ events_plus_pa = pd.merge(pa, events, how='outer', left_on=[
 # The info DataFrame that was imported from frames has already been prepared with the necessary columns and configuration.
 # We can do a straight across merge between events_plus_pa and info to add the correct team.
 # Call pd.merge() only passing in the two DataFrames to merge. Save the result as defense.
-defense = pd.merge(info, events_plus_pa)
+defense = pd.merge(events_plus_pa, info)
 
 # Calculate DER
 # Below the pd.merge() call, calculate the DER of each team.
@@ -88,6 +88,6 @@ der = der.pivot(index='year', columns='defense', values='DER')
 # For the DER plot, we will use the default line plot type.
 # Call plot on der with a few keyword arguments: x_compat set to True, xticks set to a range(1978, 2018, 4), and rotate the labels by 45 degrees with rot=45.
 # Show the der plot with plt.show().
-der.plot(x_compat=True, xticks=(1978, 2018, 4), rot=45)
+der.plot(x_compat=True, xticks=range(1978, 2018, 4), rot=45)
 plt.show()
-print(der.head())
+# print(der.head())
