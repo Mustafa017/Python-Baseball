@@ -1,6 +1,3 @@
-from cProfile import label
-from statistics import mean
-from turtle import color
 import pandas as pd
 import matplotlib.pyplot as plt
 from data import games
@@ -17,6 +14,6 @@ attendance.loc[:, 'attendance'] = pd.to_numeric(
 attendance.plot(x='year', y='attendance', figsize=(15, 7), kind='bar')
 plt.xlabel('Year')
 plt.ylabel('Attendance')
-attendance['attendance'].mean()
-plt.axhline(label='mean', color='green', ls='dashed')
+plt.axhline(y=attendance['attendance'].mean(),
+            label='mean', color='green', ls='dashed')
 plt.show()
