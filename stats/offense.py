@@ -42,7 +42,7 @@ hits['hit_type'] = pd.Categorical(
     hits['hit_type'], ['single', 'double', 'triple', 'hr'])
 
 # Sort Values
-hits = hits.sort_values(by=['inning', 'hit_type'])
+hits = hits.sort_values(['inning', 'hit_type'])
 
 # Reshape With Pivot
 # We need to reshape the hits DataFrame for plotting.
