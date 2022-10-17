@@ -46,6 +46,6 @@ games = games.fillna(' ')
 # Categorical Event Type
 # To slightly reduce the memory used by the games DataFrame we can provide Pandas with a clue to what data is contained in certain columns.
 # The type column of our games DataFrame only contains one of six values - info, start, play, com, sub, and data. Pandas can optimize this column with Categorical().
-games.loc[:, 'type'] = pd.Categorical(games.loc[:, 'type'])
+games.loc[:, 'type'] = pd.Categorical(games['type'])
 
 print(games.head())

@@ -13,7 +13,7 @@ hits = plays.loc[plays['event'].str.contains(
     '^(?:S(?!B)|D|T|HR)'), ['inning', 'event']]
 
 # Convert Column Type
-hits.loc[:, 'inning'] = pd.to_numeric(hits.loc[:, 'inning'])
+hits.loc[:, 'inning'] = pd.to_numeric(hits['inning'])
 
 # Replace Dictionary
 # The event column of the hits DataFrame now contains event information of various configurations.

@@ -43,7 +43,7 @@ events = events.unstack().fillna(0).reset_index()
 # Next, change the events DataFrame column labels to the following: 'year', 'game_id', 'team', 'BB', 'E', 'H', 'HBP', 'HR', 'ROE', and 'SO'.
 # Lastly, remove the label of the index using rename_axis(). Pass in a label of None and make sure it is on the columns axis. This operation returns a new DataFrame so save it to events.
 
-events.columns = events.columns.droplevel(level=1)
+events.columns = events.columns.droplevel()
 events.columns = ['year', 'game_id', 'team',
                   'BB', 'E', 'H', 'HBP', 'HR', 'ROE', 'SO']
 events = events.rename_axis(None, axis=1)
@@ -74,7 +74,7 @@ defense = pd.merge(info, events_plus_pa)
 defense.loc[:, 'DER'] = 1 - ((defense['H'] + defense['ROE']) / (
     defense['PA'] - defense['BB'] - defense['SO'] - defense['HBP'] - defense['HR']))
 
-defense.loc[:, 'year'] = pd.to_numeric(defense.loc[:, 'year'])
+defense.loc[:, 'year'] = pd.to_numeric(defense['year'])
 
 # Reshape With Pivot
 # We are only going to plot the DER of the All-star teams in the last 40 years.
@@ -82,7 +82,7 @@ defense.loc[:, 'year'] = pd.to_numeric(defense.loc[:, 'year'])
 # Call pivot on der to adjust the data for plotting. Use the keyword arguments 'index', 'columns' and 'values' in pivot with the correct column labels.
 # Reassign the pivot() call to der.
 der = defense.loc[defense['year'] >= 1978, ['year', 'defense', 'DER']]
-der.pivot(index='year', columns='defense', values='DER')
+der = der.pivot(index='year', columns='defense', values='DER')
 
 # Plot Formatting - xticks
 # For the DER plot, we will use the default line plot type.
@@ -90,4 +90,4 @@ der.pivot(index='year', columns='defense', values='DER')
 # Show the der plot with plt.show().
 der.plot(x_compat=True, xticks=(1978, 2018, 4), rot=45)
 plt.show()
-# print(der.head())
+print(der.head())
